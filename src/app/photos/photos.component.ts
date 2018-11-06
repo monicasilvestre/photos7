@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Photo } from '../photo';
+import { PhotoService } from '../photo.service';
 
 @Component({
   selector: 'app-photos',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
-
-  constructor() { }
+  photos: Photo[];
+  constructor(private photoService: PhotoService) { }
 
   ngOnInit() {
+    this.getPhotos();
   }
 
+  getPhotos(): void {
+    this.photoService
+      .getPhotos()
+      .subscribe(photos => this.photos = photos);
+  }
 }
