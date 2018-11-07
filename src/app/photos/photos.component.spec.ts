@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { Photo } from '../photo';
 import { SearchComponent } from '../search/search.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 describe('PhotosComponent', () => {
   let component: PhotosComponent;
@@ -21,7 +22,7 @@ describe('PhotosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhotosComponent, SearchComponent ],
+      declarations: [ PhotosComponent, SearchComponent, PaginationComponent ],
       providers: [ PhotoService ],
       imports: [ HttpClientTestingModule ]
     })
@@ -56,5 +57,23 @@ describe('PhotosComponent', () => {
     component.search('kitten');
     expect(component.currentSearch).toEqual('kitten');
     expect(component.photos).toBeNull;
-  })
+  });
+
+  it('should set current page on paginating', () => {    
+    component.currentPage = 1;
+    component.paginate(7);
+    expect(component.currentPage).toEqual(7);
+  });
+
+  it('should go to first page when searching photos', () => {    
+    component.currentPage = 2;
+    component.search('kitten');
+    expect(component.currentPage).toEqual(0);
+  });
+  
+  it('should go to first page when getting photos', () => {    
+    component.currentPage = 1;
+    component.getPhotos();
+    expect(component.currentPage).toEqual(0);
+  });
 });

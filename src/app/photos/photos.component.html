@@ -1,9 +1,10 @@
 <app-search (search)="search($event)"></app-search>
 <ul class="photos">
-  <li *ngFor="let photo of photos | slice:0:12">
+  <li *ngFor="let photo of photos">
     <div>
         <img src="{{photo.url}}">
         <p>{{photo.title}}</p>
     </div>    
   </li>
 </ul>
+<app-pagination [currentPage]="currentPage" (navigate)="paginate($event)"></app-pagination>

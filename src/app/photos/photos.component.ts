@@ -11,6 +11,8 @@ export class PhotosComponent implements OnInit {
   photos: Photo[];
   photosFromServer: Photo[];
   currentSearch = '';
+  numberOfElementsPerPage = 12;
+  currentPage = 0;  
   
   constructor(private photoService: PhotoService) { }
 
@@ -23,12 +25,21 @@ export class PhotosComponent implements OnInit {
       .getPhotos()
       .subscribe(photos => {
         this.photosFromServer = this.photos = photos;
+        this.paginate(0);
       });
   }
 
   search(newSearch: string) {
     this.currentSearch = newSearch.trim();
-    this.photos = this.photosFromServer
-    .filter(a => a.title.includes(this.currentSearch))
+    this.paginate(0);
   }
+
+  paginate(newPage: number): void {
+    this.currentPage = newPage;
+    const firstElement = this.numberOfElementsPerPage * newPage;
+    const lastElement = firstElement + this.numberOfElementsPerPage;
+    this.photos = this.photosFromServer
+      .filter(a => a.title.includes(this.currentSearch))
+      .slice(firstElement, lastElement);
+  }	  
 }

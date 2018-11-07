@@ -3,6 +3,7 @@ import { AppComponent } from './app.component';
 import { PhotosComponent } from './photos/photos.component';
 import { SearchComponent } from './search/search.component';
 import { HttpClient, HttpHandler } from '@angular/common/http';
+import { PaginationComponent } from './pagination/pagination.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -10,7 +11,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         PhotosComponent,
-        SearchComponent          
+        SearchComponent,
+        PaginationComponent          
       ],
       providers: [
         HttpClient,
