@@ -1,0 +1,21 @@
+$margin: 1.5em;
+
+ul{
+    margin-top: $margin;
+    display: flex;
+    flex-wrap: wrap;    
+    justify-content: space-evenly;
+    list-style-type: none;
+    padding: 0;
+    div {        
+        img {
+            max-width: 100%;
+            width: 444px;
+            height: auto;
+        }
+        p { 
+            margin-top: 0;
+        }
+    }
+}
+
