@@ -4,6 +4,7 @@ import { PhotoService } from '../photo.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { Photo } from '../photo';
+import { SearchComponent } from '../search/search.component';
 
 describe('PhotosComponent', () => {
   let component: PhotosComponent;
@@ -20,7 +21,7 @@ describe('PhotosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhotosComponent ],
+      declarations: [ PhotosComponent, SearchComponent ],
       providers: [ PhotoService ],
       imports: [ HttpClientTestingModule ]
     })
@@ -44,4 +45,16 @@ describe('PhotosComponent', () => {
     expect(photoServiceSpy).toHaveBeenCalled();
     expect(component.photos).toEqual(mockPhoto);
   });
+
+  it('should search photos by title', () => {    
+    component.search('accusamus');
+    expect(component.currentSearch).toEqual('accusamus');
+    expect(component.photos).toEqual(mockPhoto);
+  });
+
+  it('should not return photo when title does not match', () => {    
+    component.search('kitten');
+    expect(component.currentSearch).toEqual('kitten');
+    expect(component.photos).toBeNull;
+  })
 });

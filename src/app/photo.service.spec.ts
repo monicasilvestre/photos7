@@ -2,6 +2,8 @@ import { PhotoService } from './photo.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Photo } from './photo';
+import { componentFactoryName } from '@angular/compiler';
+import { SearchComponent } from './search/search.component';
 
 describe('Photo Service', () => {
   let photoService: PhotoService;
@@ -49,5 +51,32 @@ describe('Photo Service', () => {
       expect(req.request.method).toEqual('GET');
       req.flush(mockPhotos);
     });
-  })
+  });
+
+  describe('searchPhotos', () => {
+    beforeEach(() => {
+      photoService.getPhotos()
+      .subscribe();
+      const req = httpTestingController.expectOne('http://jsonplaceholder.typicode.com/photos')
+      req.flush(mockPhotos);
+    });
+    it('should filter by title when search term is found', () => {
+      photoService.searchPhotos('accusamus')
+      .subscribe(data =>{
+        expect(data).toEqual([mockPhotos[0]])
+      });
+    });  
+    it('should not filter by title when search does not match any title', () => {
+      photoService.searchPhotos('kittens')
+      .subscribe(data =>{
+        expect(data).toEqual([])
+      });
+    });  
+    it('should return all photos when search imput is empty', () => {
+      photoService.searchPhotos(' ')
+      .subscribe(data =>{
+        expect(data).toEqual(mockPhotos);
+      });
+    });  
+  });
 });

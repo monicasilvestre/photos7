@@ -1,12 +1,21 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { PhotosComponent } from './photos/photos.component';
+import { SearchComponent } from './search/search.component';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        PhotosComponent,
+        SearchComponent          
       ],
+      providers: [
+        HttpClient,
+        HttpHandler
+      ]
     }).compileComponents();
   }));
 
@@ -22,10 +31,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('photos-app');
   });
 
-  it('should render title in a h1 tag', () => {
+  it('should render title in a h2 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to photos-app!');
+    expect(compiled.querySelector('h2').textContent).toBe('photos-app');
   });
 });

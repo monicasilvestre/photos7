@@ -1,6 +1,9 @@
+<app-search (search)="search($event)"></app-search>
 <ul class="photos">
-  <li *ngFor="let photo of photos | slice:0:10">
-    <img src="{{photo.url}}">
-    <p>{{photo.title}}</p>
+  <li *ngFor="let photo of photos | slice:0:12">
+    <div>
+        <img src="{{photo.url}}">
+        <p>{{photo.title}}</p>
+    </div>    
   </li>
 </ul>
