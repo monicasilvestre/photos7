@@ -8,11 +8,13 @@ import { PhotoService } from '../photo.service';
   styleUrls: ['./photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
-  photos: Photo[];
   photosFromServer: Photo[];
+  filteredPhotos: Photo[];
+  photos: Photo[];
   currentSearch = '';
   numberOfElementsPerPage = 12;
-  currentPage = 0;  
+  currentPage = 0;
+  lastPage = 0;
   
   constructor(private photoService: PhotoService) { }
 
@@ -24,22 +26,23 @@ export class PhotosComponent implements OnInit {
     this.photoService
       .getPhotos()
       .subscribe(photos => {
-        this.photosFromServer = this.photos = photos;
+        this.photosFromServer = this.photos = this.filteredPhotos = photos;
         this.paginate(0);
       });
   }
 
   search(newSearch: string) {
     this.currentSearch = newSearch.trim();
+    this.filteredPhotos = this.photosFromServer
+      .filter(a => a.title.includes(this.currentSearch));
     this.paginate(0);
   }
 
   paginate(newPage: number): void {
     this.currentPage = newPage;
+    this.lastPage = Math.floor(this.filteredPhotos.length / this.numberOfElementsPerPage);
     const firstElement = this.numberOfElementsPerPage * newPage;
     const lastElement = firstElement + this.numberOfElementsPerPage;
-    this.photos = this.photosFromServer
-      .filter(a => a.title.includes(this.currentSearch))
-      .slice(firstElement, lastElement);
-  }	  
+    this.photos = this.filteredPhotos.slice(firstElement, lastElement);
+  }	
 }

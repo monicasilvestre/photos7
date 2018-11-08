@@ -8,6 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class PaginationComponent {
   @Input() numberOfElements: number;
   @Input() currentPage: number;
+  @Input() lastPage: number;
   @Output() navigate = new EventEmitter<number>();
 
   previousPage(): void {

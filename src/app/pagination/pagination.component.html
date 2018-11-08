@@ -1,4 +1,4 @@
 <div class="pagination">
     <button class="previous" [disabled]="currentPage===0" (click)="previousPage()">previous</button>
-    <button (click)="nextPage()">next</button> <!--TODO disable next-->
+    <button class="next" [disabled]="lastPage===currentPage" (click)="nextPage()">next</button>
 </div>

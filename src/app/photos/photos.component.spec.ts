@@ -59,10 +59,31 @@ describe('PhotosComponent', () => {
     expect(component.photos).toBeNull;
   });
 
-  it('should set current page on paginating', () => {    
+  it('should set current page on paginating', () => {
     component.currentPage = 1;
     component.paginate(7);
     expect(component.currentPage).toEqual(7);
+  });
+
+  it('should set last page on paginating', () => {
+    // given
+    component.photos = mockPhoto.concat({
+      "albumId": 1,
+      "id": 2,
+      "title": "woop woop",
+      "url": "https://blabla",
+      "thumbnailUrl": "https://blabla"
+    });     
+    component.currentPage = 1;
+    component.numberOfElementsPerPage = 1;
+    component.lastPage = 0;
+
+    // when
+    component.paginate(0);
+
+    // then
+    expect(component.currentPage).toEqual(0);
+    expect(component.lastPage).toEqual(1);    
   });
 
   it('should go to first page when searching photos', () => {    

@@ -49,4 +49,13 @@ describe('PaginationComponent', () => {
     component.nextPage();    
     expect(navigateSpy).toHaveBeenCalledWith(2);
   });
+
+  it('should disable nextPage button when currentPage is lastPage', () => {
+    let debug = fixture.debugElement
+    component.currentPage = 0;
+    component.lastPage = 0;
+    fixture.detectChanges();
+
+    expect(debug.nativeElement.querySelector('button.next').disabled).toBeTruthy();
+  });
 });
